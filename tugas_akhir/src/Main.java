@@ -1,18 +1,22 @@
+import java.util.Arrays;
 import java.util.Objects;
 import java.util.Scanner;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.io.FileNotFoundException;
-import java.util.Formatter;
+//import java.util.Formatter;
+//import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class Main {
     public static void main(String[] args) {
-        String rank_awal, rank_tujuan, server, jenis_proses, jenis_agent, kode_voucher, no_wa;
+        String rank_awal = null, rank_tujuan = null, server, jenis_proses, jenis_agent, kode_voucher, no_wa = null;
         char[] password;
-        char[] username;
+        char[] username = new char[0];
         int metode_bayar;
         int pilih = 0;
         String pilihan = null;
+        double total=0;
 
         Scanner scan = new Scanner(System.in);
         Orderan ord = new Orderan();
@@ -22,15 +26,16 @@ public class Main {
         LocalTime localTime = LocalTime.now();
 
         //MASUK HOME
-        do {
-            System.out.println("1. BUAT ORDER");
-            System.out.println("2. CEK PESANAN");
-            System.out.print("PILIH : ");
-            pilih = scan.nextInt();
-        }while (pilih != 1 && pilih != 2);
+//        do {
+//            System.out.println("1. BUAT ORDER");
+//            System.out.println("2. CEK PESANAN");
+//            System.out.print("PILIH : ");
+//            pilih = scan.nextInt();
+//            System.out.println("\n\n\n\n");
+//        }while (pilih != 1 && pilih != 2);
 
         //BUAT ORDER
-        if (pilih == 1) {
+//        if (pilih == 1) {
             do {
                 ord.tampilkan();
                 System.out.println("BUAT ORDERAN ~~~~~~~~~~~~~~~~");
@@ -74,6 +79,7 @@ public class Main {
                 nta.hitung_tvagent();
                 nta.hitung_total();
                 nta.total();
+                total = nta.getTotal();
                 System.out.println("1. Lanjut Checkout ");
                 System.out.println("2. Kembali");
                 System.out.println("3. Keluar");
@@ -104,6 +110,7 @@ public class Main {
             } else if (pilih == 3) {
                 System.out.println("Keluar Program");
             }
+            
              //METODE PEMBAYARAN
             if (metode_bayar == 1) {
                 System.out.println("\t\t------------------------------");
@@ -142,21 +149,30 @@ public class Main {
             }
 
             System.out.println("Jika sudah bayar, cetak Invoice");
-            System.out.print("sudah/belum");
+            System.out.print("sudah/belum ? --> ");
             pilihan = scan.next();
-            if (pilihan == "sudah"){
-                try (Formatter file = new Formatter("invoice.txt")) {
-
-                    //Menulis data baru pada file yang bersangkutan
-                    file.format("%s %n", "Android Developer");
-                    file.format("%s %n", "Blogger");
-                    file.format("%s %n", "Bisnis Online");
-
-                }catch(FileNotFoundException ex){
-                    //Menampilkan pesan jika file tidak ditemukan
-                    System.out.println("File Tidak Ditemukan");
+            if (Objects.equals(pilihan, "sudah")){
+                String fileName = "src/invoice.txt";
+                try {
+                    FileWriter fileWriter = new FileWriter(fileName);
+                    fileWriter.write("No. Invoice : 0001\n");
+                    fileWriter.write("Username : ");
+                    fileWriter.write(username);
+                    fileWriter.write("\nNo. Whatsapp : ");
+                    assert no_wa != null;
+                    fileWriter.write(no_wa);
+                    fileWriter.write("\nTOTAL ~~~~~~~~~~~~~~~~.\n");
+                    fileWriter.write("-----------------------------------------------------------\n");
+                    fileWriter.write("Total\t\t\tRp ");
+                    fileWriter.write(String.valueOf(total));
+                    fileWriter.close();
+                    System.out.println("File sudah ditulis ulang!");
+                } catch (IOException e) {
+                    System.out.println("Terjadi kesalahan karena: " + e.getMessage());
                 }
+            } else if (!Objects.equals(pilihan, "sudah")){
+
             }
         }
     }
-}
+//}

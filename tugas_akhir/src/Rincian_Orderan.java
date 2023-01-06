@@ -1,6 +1,6 @@
 import java.util.Arrays;
 
-public class Rincian_Orderan{
+public class Rincian_Orderan implements Home{
     char[] username;
     char[] password;
     String no_wa;

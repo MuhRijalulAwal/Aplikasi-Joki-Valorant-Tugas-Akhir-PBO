@@ -1,6 +1,6 @@
 No. Invoice : 0001
 Username : Viveri
-No. Whatsapp : 0886586353
-TOTAL ~~~~~~~~~~~~~~~~.
+No. Whatsapp : 0838535
+TOTAL ~~~~~~~~~~~~~~~~
 -----------------------------------------------------------
-Total			Rp 135000.0
+Total			Rp 105000.0
